@@ -1,0 +1,5 @@
+main: me.gt3ch1.craftback.Main.Main
+name: CraftBack
+version: 1.0
+author: GT3CH1
+description: A plugin used for controlling a server.
