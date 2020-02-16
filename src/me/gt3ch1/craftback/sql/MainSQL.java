@@ -48,7 +48,7 @@ public class MainSQL {
 			if (rs.next()) {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
 				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
-						"' ,`hostname` = '" + serverHostName +"' WHERE "
+						" ,`hostname` = '" + serverHostName +"' WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
 			}
 
