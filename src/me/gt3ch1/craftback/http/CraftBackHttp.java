@@ -84,7 +84,11 @@ public class CraftBackHttp {
 
 					}
 				} else if (url.contentEquals("/getPlayers")) {
-					//TODO: Return UUIDS and names of players.
+					out.println("HTTP/1.0 200 OK");
+					out.println("Content-Type: text/text");
+					out.println("Access-Control-Allow-Origin: *");
+					out.println("");
+					out.println(Main.playerUUIDAndNameList.toString());
 					
 				}
 				else {
