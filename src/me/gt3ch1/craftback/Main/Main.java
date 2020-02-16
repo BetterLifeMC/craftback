@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import me.gt3ch1.craftback.http.CraftBackHttp;
+import me.gt3ch1.craftback.listeners.PlayerEventListener;
 import me.gt3ch1.craftback.sql.MainSQL;
 
 public class Main extends JavaPlugin {
@@ -78,7 +79,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		org.spigotmc.AsyncCatcher.enabled = false;
+//		org.spigotmc.AsyncCatcher.enabled = false;
+
 		File f = new File("plugins/CraftBack/config.yml");
 		if (!f.exists()) {
 			this.saveDefaultConfig();
@@ -86,12 +88,15 @@ public class Main extends JavaPlugin {
 			this.getConfig().options().copyDefaults(true);
 			this.saveConfig();
 		}
+		
 		this.saveDefaultConfig();
 
 		port = this.getConfig().getInt("port");
 		useSQL = this.getConfig().getBoolean("useSQL");
 		Bukkit.getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
+		
 		if (useSQL) {
+			
 			serverName = this.getConfig().getString("name");
 			dataAddress = this.getConfig().getString("data.address");
 			database = this.getConfig().getString("data.database");
@@ -124,9 +129,11 @@ public class Main extends JavaPlugin {
 		t.start();
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
+		
+		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(), this);
 
 	}
-
+	
 	@Override
 	public void onDisable() {
 
