@@ -72,9 +72,8 @@ public class Main extends JavaPlugin {
 	public boolean useSQL = false;
 	
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
-	public ArrayList<String> playerNameArrayList = new ArrayList<String>();
+	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
-	static public ArrayList<ArrayList> playerUUIDAndNameList = new ArrayList<ArrayList>();
 	
 	Thread t;
 	
@@ -140,33 +139,35 @@ public class Main extends JavaPlugin {
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
 		
 		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(getPluginHere()), this);
-		
-		playerUUIDAndNameList.add(playerUUIDArrayList);
-		playerUUIDAndNameList.add(playerNameArrayList);
+
 		
 	}
 	
 	@Override
 	public void onDisable() {
+
 		t.interrupt();
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
-		playerUUIDAndNameList.remove(0);
-		playerUUIDAndNameList.remove(0);
+
 	}
 	
 	
 	
 	public void addPlayerToArrayLists(Player p) {
+		
 		playerArrayList.add(p);
 		playerNameArrayList.add(p.getName());
 		playerUUIDArrayList.add(p.getUniqueId().toString());
+		
 	}
 	
 	public void removePlayerFromArrayLists(Player p) {
+		
 		int playerIndex = playerArrayList.indexOf(p);
 		playerArrayList.remove(playerIndex);
 		playerNameArrayList.remove(playerIndex);
 		playerUUIDArrayList.remove(playerIndex);
+		
 	}
 
 }

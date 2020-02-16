@@ -15,14 +15,20 @@ import org.bukkit.entity.Player;
 
 import me.gt3ch1.craftback.Main.Main;
 
-
-
 public class CraftBackHttp {
+
+	public static void printHeaders(PrintWriter out) {
+		out.println("HTTP/1.0 200 OK");
+		out.println("Content-Type: text/text");
+		out.println("Access-Control-Allow-Origin: *");
+		out.println("");
+	}
+
 	@SuppressWarnings("resource")
 	public static void start(int p) throws IOException {
-		
+
 		ServerSocket ss = new ServerSocket(p);
-		
+
 		while (true) {
 			try {
 
@@ -50,26 +56,19 @@ public class CraftBackHttp {
 
 				if (url.equals("/sendMessage")) {
 
-
-					
 					String[] parameters = getString.split("=");
-					if(parameters[0].equals("message")) {
-						out.println("HTTP/1.0 200 OK");
-						out.println("Content-Type: text/text");
-						out.println("Access-Control-Allow-Origin: *");
-						out.println("");
+					if (parameters[0].equals("message")) {
+						printHeaders(out);
 						out.println("ok");
 						Main.setCommand(parameters[1].replace("+", " ").replace("%20", " "));
 					}
-					
+
 				} else if (url.contentEquals("/getLog")) {
 
 					File f = null;
 					f = new File("logs/latest.log");
-					out.println("HTTP/1.0 200 OK");
-					out.println("Content-Type: text/text");
-					out.println("Access-Control-Allow-Origin: *");
-					out.println("");
+					printHeaders(out);
+
 					FileReader fr = new FileReader(f);
 
 					while (true) {
@@ -83,17 +82,17 @@ public class CraftBackHttp {
 						out.write(read);
 
 					}
-				} else if (url.contentEquals("/getPlayers")) {
-					
+				} else if (url.contentEquals("/getPlayerUUIDS")) {
+					printHeaders(out);
 					out.println(Main.playerUUIDArrayList.toString());
-					
-				}
-				else {
 
-					out.println("HTTP/1.0 200 OK");
-					out.println("Content-Type: text/html");
-					out.println("Access-Control-Allow-Origin: *");
-					out.println("");
+				} else if (url.contentEquals("/getPlayerNames")) {
+					printHeaders(out);
+					out.println(Main.playerNameArrayList.toString());
+				}
+				
+				else {
+					printHeaders(out);
 
 				}
 
