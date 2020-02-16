@@ -32,7 +32,9 @@ public class Main extends JavaPlugin {
 	 * 
 	 */
 	static String ss;
-
+	
+	static final double VERSION = 1.4;
+	
 	public String getServerName() {
 		return serverName;
 	}
@@ -120,7 +122,7 @@ public class Main extends JavaPlugin {
 			fingerprint = this.getConfig().getString("fingerprint");
 			serverHostName = this.getConfig().getString("serverHostName");
 			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
-					getServerName(), getPort(), getServerHostName());
+					getServerName(), getPort(), getServerHostName(), VERSION);
 		}
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
