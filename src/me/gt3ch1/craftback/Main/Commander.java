@@ -14,9 +14,9 @@ public class Commander extends BukkitRunnable {
 	@Override
 	public void run() {
 		Bukkit.getScheduler().runTask(this.plugin, () -> {
-			if(Main.ss != null)
+			if(Main.ss != null) {
 				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Main.ss);
-			Bukkit.getLogger().info(ChatColor.BLUE + "[[CraftBack]] Command recieved: " + Main.ss);
+			}
 			Main.ss = null;
         });
 	}

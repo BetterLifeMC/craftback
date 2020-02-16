@@ -61,7 +61,7 @@ public class CraftBackHttp {
 						out.println("Access-Control-Allow-Origin: *");
 						out.println("");
 						out.println("ok");
-						Main.setCommand(parameters[1].replace("+", " "));
+						Main.setCommand(parameters[1].replace("+", " ").replace("%20", " "));
 					}
 					
 				} else if (url.contentEquals("/getLog")) {
