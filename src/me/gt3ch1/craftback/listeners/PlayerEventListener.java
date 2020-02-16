@@ -10,16 +10,20 @@ import me.gt3ch1.craftback.Main.Main;
 
 public class PlayerEventListener implements Listener{
 	
-	public static Main main;
+	public static Main craftback;
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
-		event.setJoinMessage("This is a test");
-		p.sendMessage("I am testing this.");
+//		p.sendMessage("I am testing this.");
+		craftback.addPlayerToArrayLists(p);
+		System.out.println(craftback.playerArrayList.toString());
+
 	}
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event) {
+		Player p = event.getPlayer();
+		craftback.removePlayerFromArrayLists(p);
 		
 	}
 }

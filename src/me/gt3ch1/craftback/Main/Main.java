@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -14,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.entity.Player;
 
 import me.gt3ch1.craftback.http.CraftBackHttp;
 import me.gt3ch1.craftback.listeners.PlayerEventListener;
@@ -68,7 +70,14 @@ public class Main extends JavaPlugin {
 	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
-
+	
+	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
+	public ArrayList<String> playerNameArrayList = new ArrayList<String>();
+	public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
+	public ArrayList<ArrayList> playerUUIDAndNameList = new ArrayList<ArrayList>();
+	
+	Thread t;
+	
 	public static void setCommand(String s) {
 		ss = s;
 	}
@@ -109,7 +118,7 @@ public class Main extends JavaPlugin {
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
 
-		Thread t = new Thread(new Runnable() {
+		t = new Thread(new Runnable() {
 
 			public void run() {
 				try {
@@ -131,14 +140,33 @@ public class Main extends JavaPlugin {
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
 		
 		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(), this);
-
+		
+		playerUUIDAndNameList.add(playerUUIDArrayList);
+		playerUUIDAndNameList.add(playerNameArrayList);
+		
 	}
 	
 	@Override
 	public void onDisable() {
-
+		t.interrupt();
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
-
+		playerUUIDAndNameList.remove(0);
+		playerUUIDAndNameList.remove(0);
+	}
+	
+	
+	
+	public void addPlayerToArrayLists(Player p) {
+		playerArrayList.add(p);
+		playerNameArrayList.add(p.getName());
+		playerUUIDArrayList.add(p.getUniqueId().toString());
+	}
+	
+	public void removePlayerFromArrayLists(Player p) {
+		int playerIndex = playerArrayList.indexOf(p);
+		playerArrayList.remove(playerIndex);
+		playerNameArrayList.remove(playerIndex);
+		playerUUIDArrayList.remove(playerIndex);
 	}
 
 }
