@@ -50,7 +50,7 @@ public class MainSQL {
 			if (rs.next()) {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
 				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
-						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = "+ Bukkit.getMaxPlayers() + "', `version` = '" + version + " WHERE "
+						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = "+ Bukkit.getMaxPlayers() + "', `version` = '" + version + "' WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
 			}
 
