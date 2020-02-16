@@ -38,7 +38,6 @@ public class CraftBackHttp {
 				String string = br.readLine();
 				String getString = "";
 				String url = "";
-				System.out.println(string);
 				try {
 
 					getString = string.split("/\\?")[1].split(" ")[0];
@@ -63,7 +62,7 @@ public class CraftBackHttp {
 					if (parameters[0].equals("message")) {
 						printHeaders(out);
 						out.println("ok");
-						Main.setCommand(parameters[1].replace("+", " ").replace("%20", " "));
+						Main.setCommand(parameters[1].replace("+", " ").replace("%20", " ").replace("%3F", "?"));
 					}
 
 				} else if (url.contentEquals("/getLog")) {
