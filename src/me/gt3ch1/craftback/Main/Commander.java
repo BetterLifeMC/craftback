@@ -8,17 +8,19 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Commander extends BukkitRunnable {
 	private final JavaPlugin plugin;
+
 	public Commander(JavaPlugin plugin) {
 		this.plugin = plugin;
 	}
+
 	@Override
 	public void run() {
 		Bukkit.getScheduler().runTask(this.plugin, () -> {
-			if(Main.ss != null) {
+			if (Main.ss != null) {
 				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Main.ss);
 			}
 			Main.ss = null;
-        });
+		});
 	}
 
 }

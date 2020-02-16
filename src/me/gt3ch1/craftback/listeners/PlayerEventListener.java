@@ -17,7 +17,6 @@ public class PlayerEventListener implements Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
-//		p.sendMessage("I am testing this.");
 		craftback.addPlayerToArrayLists(p);
 
 	}

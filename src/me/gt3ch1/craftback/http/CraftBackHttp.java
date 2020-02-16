@@ -90,7 +90,7 @@ public class CraftBackHttp {
 					printHeaders(out);
 					out.println(Main.playerNameArrayList.toString());
 				}
-				
+
 				else {
 					printHeaders(out);
 

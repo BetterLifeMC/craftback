@@ -22,7 +22,14 @@ import me.gt3ch1.craftback.listeners.PlayerEventListener;
 import me.gt3ch1.craftback.sql.MainSQL;
 
 public class Main extends JavaPlugin {
-	@SuppressWarnings("deprecation")
+	/*
+	 * TODO:
+	 * 		Add JavaDoc to all the functions.
+	 * 		Clean up uneccessary spaghetti code.
+	 * 		Add catch in CraftBackHttp for a message of "?"
+	 * 		Add versioning info about plugin for SQL.
+	 * 
+	 */
 	static String ss;
 
 	public String getServerName() {
@@ -36,7 +43,7 @@ public class Main extends JavaPlugin {
 	public String getDatabase() {
 		return database;
 	}
-	
+
 	public String getServerHostName() {
 		return serverHostName;
 	}
@@ -70,13 +77,13 @@ public class Main extends JavaPlugin {
 	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
-	
+
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
-	
+
 	Thread t;
-	
+
 	public static void setCommand(String s) {
 		ss = s;
 	}
@@ -87,7 +94,6 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-//		org.spigotmc.AsyncCatcher.enabled = false;
 
 		File f = new File("plugins/CraftBack/config.yml");
 		if (!f.exists()) {
@@ -96,15 +102,15 @@ public class Main extends JavaPlugin {
 			this.getConfig().options().copyDefaults(true);
 			this.saveConfig();
 		}
-		
+
 		this.saveDefaultConfig();
 
 		port = this.getConfig().getInt("port");
 		useSQL = this.getConfig().getBoolean("useSQL");
 		Bukkit.getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
-		
+
 		if (useSQL) {
-			
+
 			serverName = this.getConfig().getString("name");
 			dataAddress = this.getConfig().getString("data.address");
 			database = this.getConfig().getString("data.database");
@@ -112,7 +118,8 @@ public class Main extends JavaPlugin {
 			dataPassword = this.getConfig().getString("data.password");
 			fingerprint = this.getConfig().getString("fingerprint");
 			serverHostName = this.getConfig().getString("serverHostName");
-			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(), getServerName(), getPort(), getServerHostName());
+			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
+					getServerName(), getPort(), getServerHostName());
 		}
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
@@ -137,36 +144,33 @@ public class Main extends JavaPlugin {
 		t.start();
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
-		
+
 		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(getPluginHere()), this);
 
-		
 	}
-	
+
 	@Override
 	public void onDisable() {
 
 		t.interrupt();
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 	}
-	
-	
-	
+
 	public void addPlayerToArrayLists(Player p) {
-		
+
 		playerArrayList.add(p);
 		playerNameArrayList.add(p.getName());
 		playerUUIDArrayList.add(p.getUniqueId().toString());
-		
+
 	}
-	
+
 	public void removePlayerFromArrayLists(Player p) {
-		
+
 		int playerIndex = playerArrayList.indexOf(p);
 		playerArrayList.remove(playerIndex);
 		playerNameArrayList.remove(playerIndex);
 		playerUUIDArrayList.remove(playerIndex);
-		
+
 	}
 
 }
