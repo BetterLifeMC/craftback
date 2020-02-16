@@ -28,6 +28,7 @@ public class Main extends JavaPlugin {
 	 * 		Clean up uneccessary spaghetti code.
 	 * 		Add catch in CraftBackHttp for a message of "?"
 	 * 		Add versioning info about plugin for SQL.
+	 * 		Make branch for BungeeCord proxies.
 	 * 
 	 */
 	static String ss;
