@@ -58,6 +58,7 @@ public class CraftBackHttp {
 					if(parameters[0].equals("message")) {
 						out.println("HTTP/1.0 200 OK");
 						out.println("Content-Type: text/text");
+						out.println("Access-Control-Allow-Origin: *");
 						out.println("");
 						out.println("ok");
 						Main.setCommand(parameters[1].replace("+", " "));
@@ -69,6 +70,7 @@ public class CraftBackHttp {
 					f = new File("logs/latest.log");
 					out.println("HTTP/1.0 200 OK");
 					out.println("Content-Type: text/text");
+					out.println("Access-Control-Allow-Origin: *");
 					out.println("");
 					FileReader fr = new FileReader(f);
 
@@ -87,6 +89,7 @@ public class CraftBackHttp {
 
 					out.println("HTTP/1.0 200 OK");
 					out.println("Content-Type: text/html");
+					out.println("Access-Control-Allow-Origin: *");
 					out.println("");
 
 				}
