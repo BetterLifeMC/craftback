@@ -38,7 +38,7 @@ public class CraftBackHttp {
 				String string = br.readLine();
 				String getString = "";
 				String url = "";
-
+				System.out.println(string);
 				try {
 
 					getString = string.split("/\\?")[1].split(" ")[0];
@@ -55,8 +55,11 @@ public class CraftBackHttp {
 				}
 
 				if (url.equals("/sendMessage")) {
-
+					
+					
+					
 					String[] parameters = getString.split("=");
+				
 					if (parameters[0].equals("message")) {
 						printHeaders(out);
 						out.println("ok");
