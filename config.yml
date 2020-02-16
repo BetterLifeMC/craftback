@@ -6,3 +6,4 @@ data:
     username: 'changeme'
     password: changeme
 name: changeme
+serverHostName: changeme

@@ -17,10 +17,10 @@ public class MainSQL {
 	String dataUsername = "";
 	String dataPassword = "";
 	String serverName = "";
-
+	String serverHostName = "";
 	int port = 8080;
 
-	public MainSQL(String da, String db, String f, String du, String dp, String sn, int p) {
+	public MainSQL(String da, String db, String f, String du, String dp, String sn, int p, String sh) {
 
 		this.dataAddress = da;
 		this.database = db;
@@ -28,7 +28,7 @@ public class MainSQL {
 		this.dataUsername = du;
 		this.dataPassword = dp;
 		this.serverName = sn;
-
+		this.serverHostName = sh;
 		this.port = p;
 		doSQL();
 
@@ -47,14 +47,15 @@ public class MainSQL {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM `Servers` WHERE `fingerprint` = '" + fingerprint + "'");
 			if (rs.next()) {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
-				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port + " WHERE "
+				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
+						"' ,`hostname` = '" + serverHostName +"' WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
 			}
 
 			else {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Inserting SQL...");
-				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`) VALUES " + "('" + serverName
-						+ "'," + port + ",'" + fingerprint + "')");
+				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`serverHostName`) VALUES " + "('" + serverName
+						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"')");
 			}
 			con.close();
 		} catch (Exception e) {

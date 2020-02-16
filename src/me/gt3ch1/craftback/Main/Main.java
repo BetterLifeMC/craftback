@@ -33,6 +33,10 @@ public class Main extends JavaPlugin {
 	public String getDatabase() {
 		return database;
 	}
+	
+	public String getServerHostName() {
+		return serverHostName;
+	}
 
 	public String getDataUsername() {
 		return dataUsername;
@@ -60,6 +64,7 @@ public class Main extends JavaPlugin {
 	public String dataUsername = "";
 	public String dataPassword = "";
 	public String fingerprint = "";
+	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
 
@@ -93,7 +98,8 @@ public class Main extends JavaPlugin {
 			dataUsername = this.getConfig().getString("data.username");
 			dataPassword = this.getConfig().getString("data.password");
 			fingerprint = this.getConfig().getString("fingerprint");
-			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(), getServerName(), getPort());
+			serverHostName = this.getConfig().getString("serverHostName");
+			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(), getServerName(), getPort(), getServerHostName());
 		}
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
