@@ -53,7 +53,6 @@ public class CraftBackHttp {
 					 * TODO: Do Action. TODO: Split getString into useable data.
 					 */
 					
-					System.out.println(url);
 					String[] parameters = getString.split("=");
 					if(parameters[0].equals("message")) {
 						out.println("HTTP/1.0 200 OK");
