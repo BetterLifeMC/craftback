@@ -54,7 +54,7 @@ public class MainSQL {
 
 			else {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Inserting SQL...");
-				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`serverHostName`) VALUES " + "('" + serverName
+				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`hostname`) VALUES " + "('" + serverName
 						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"')");
 			}
 			con.close();
