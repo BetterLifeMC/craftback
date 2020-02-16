@@ -48,14 +48,14 @@ public class MainSQL {
 			if (rs.next()) {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
 				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
-						" ,`hostname` = '" + serverHostName +"' WHERE "
+						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = "+ Bukkit.getMaxPlayers() +" WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
 			}
 
 			else {
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Inserting SQL...");
-				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`hostname`) VALUES " + "('" + serverName
-						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"')");
+				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`hostname`,`maxplayers`) VALUES " + "('" + serverName
+						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"', "+Bukkit.getMaxPlayers() +")");
 			}
 			con.close();
 		} catch (Exception e) {

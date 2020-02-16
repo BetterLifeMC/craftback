@@ -148,7 +148,6 @@ public class Main extends JavaPlugin {
 
 		t.interrupt();
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
-
 	}
 	
 	
