@@ -9,6 +9,7 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
+    <property name="dir.build" value="bin"/>
     <path id="CraftBack.classpath">
         <pathelement location="bin"/>
         <pathelement location="libs/spigot.jar"/>
@@ -32,8 +33,10 @@
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="CraftBack.classpath"/>
-            
         </javac>
+        <jar basedir="bin" destfile="dist/CraftBack.jar">
+            <zipfileset dir="." includes="*.yml" />
+        </jar>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
     <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
