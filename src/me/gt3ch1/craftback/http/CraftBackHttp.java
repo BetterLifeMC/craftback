@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.net.SocketImpl;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import me.gt3ch1.craftback.Main.Main;
 
@@ -82,7 +83,13 @@ public class CraftBackHttp {
 						out.write(read);
 
 					}
-				} else {
+				} else if (url.contentEquals("/getPlayers")) {
+					//TODO: Return UUIDS and names of players.
+					for(Player player : Bukkit.getOnlinePlayers()) {
+						player.getUniqueId();
+					}
+				}
+				else {
 
 					out.println("HTTP/1.0 200 OK");
 					out.println("Content-Type: text/html");
