@@ -49,9 +49,7 @@ public class CraftBackHttp {
 
 				if (url.equals("/sendMessage")) {
 
-					/*
-					 * TODO: Do Action. TODO: Split getString into useable data.
-					 */
+
 					
 					String[] parameters = getString.split("=");
 					if(parameters[0].equals("message")) {
