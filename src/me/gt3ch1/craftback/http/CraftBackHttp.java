@@ -84,11 +84,8 @@ public class CraftBackHttp {
 
 					}
 				} else if (url.contentEquals("/getPlayers")) {
-					out.println("HTTP/1.0 200 OK");
-					out.println("Content-Type: text/text");
-					out.println("Access-Control-Allow-Origin: *");
-					out.println("");
-					out.println(Main.playerUUIDAndNameList.toString());
+					
+					out.println(Main.playerUUIDArrayList.toString());
 					
 				}
 				else {

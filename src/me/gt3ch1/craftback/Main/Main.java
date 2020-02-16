@@ -73,7 +73,7 @@ public class Main extends JavaPlugin {
 	
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	public ArrayList<String> playerNameArrayList = new ArrayList<String>();
-	public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
+	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
 	static public ArrayList<ArrayList> playerUUIDAndNameList = new ArrayList<ArrayList>();
 	
 	Thread t;
