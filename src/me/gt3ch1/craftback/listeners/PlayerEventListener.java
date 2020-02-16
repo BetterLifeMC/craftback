@@ -19,7 +19,7 @@ public class PlayerEventListener implements Listener{
 		Player p = event.getPlayer();
 //		p.sendMessage("I am testing this.");
 		craftback.addPlayerToArrayLists(p);
-		System.out.println(craftback.playerArrayList.toString());
+		System.out.println(craftback.playerUUIDAndNameList.toString());
 
 	}
 	@EventHandler
