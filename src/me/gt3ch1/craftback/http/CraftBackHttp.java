@@ -86,7 +86,7 @@ public class CraftBackHttp {
 				} else if (url.contentEquals("/getPlayers")) {
 					//TODO: Return UUIDS and names of players.
 					for(Player player : Bukkit.getOnlinePlayers()) {
-						player.getUniqueId();
+						player.getUniqueId().toString();
 					}
 				}
 				else {
