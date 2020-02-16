@@ -16,6 +16,7 @@ public class PlayerEventListener implements Listener{
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
 		event.setJoinMessage("This is a test");
+		p.sendMessage("I am testing this.");
 	}
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event) {
