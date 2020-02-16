@@ -139,7 +139,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
 		
-		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(getPluginHere()), this);
 		
 		playerUUIDAndNameList.add(playerUUIDArrayList);
 		playerUUIDAndNameList.add(playerNameArrayList);

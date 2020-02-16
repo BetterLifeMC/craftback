@@ -9,8 +9,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import me.gt3ch1.craftback.Main.Main;
 
 public class PlayerEventListener implements Listener{
-	
-	public static Main craftback;
+	Main craftback;
+	public PlayerEventListener(Main m) {
+		this.craftback = m;
+	}
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
