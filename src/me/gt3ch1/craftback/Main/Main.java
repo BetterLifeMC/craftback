@@ -171,9 +171,14 @@ public class Main extends Plugin {
 	}
 
 	public void startCommandListener() {
+		
+		System.out.println("STARTING LISTENER");
+		
 		getProxy().getScheduler().schedule(this, new Runnable() {
+			
 			@Override
 			public void run() {
+				System.out.println("IN LOOP");
 				if (Main.ss != null) {
 
 					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(),
