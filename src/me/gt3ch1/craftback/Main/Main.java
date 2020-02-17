@@ -2,17 +2,11 @@ package me.gt3ch1.craftback.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.event.EventHandler;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.entity.Player;
@@ -29,6 +23,7 @@ public class Main extends JavaPlugin {
 	 * 		Add catch in CraftBackHttp for a message of "?"
 	 * 		Add versioning info about plugin for SQL.
 	 * 		Make branch for BungeeCord proxies.
+	 * 		Fix fingerprint gen.
 	 * 
 	 */
 	static String ss;
