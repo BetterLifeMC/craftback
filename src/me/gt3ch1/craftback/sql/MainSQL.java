@@ -17,10 +17,10 @@ public class MainSQL {
 	String dataPassword = "";
 	String serverName = "";
 	String serverHostName = "";
-	double version = 0.0;
+	String version = "";
 	int port = 8080;
 
-	public MainSQL(String da, String db, String f, String du, String dp, String sn, int p, String sh, double v) {
+	public MainSQL(String da, String db, String f, String du, String dp, String sn, int p, String sh, String version2) {
 
 		this.dataAddress = da;
 		this.database = db;
@@ -30,7 +30,7 @@ public class MainSQL {
 		this.serverName = sn;
 		this.serverHostName = sh;
 		this.port = p;
-		this.version = v;
+		this.version = version2;
 		doSQL();
 
 	}
