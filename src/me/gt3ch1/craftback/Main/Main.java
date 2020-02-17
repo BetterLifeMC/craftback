@@ -6,11 +6,13 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.lang.RandomStringUtils;
 import me.gt3ch1.craftback.http.CraftBackHttp;
 import me.gt3ch1.craftback.sql.MainSQL;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PlayerHandshakeEvent;
+import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -72,7 +74,7 @@ public class Main extends Plugin {
 	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
-
+	static public ArrayList<ProxiedPlayer> playerArrayList = new ArrayList<ProxiedPlayer>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
 
@@ -100,7 +102,7 @@ public class Main extends Plugin {
 				Files.copy(in, file.toPath());
 				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
 						.load(new File(getDataFolder(), "config.yml"));
-				configuration.set("fingerprint",  RandomStringUtils.randomAlphanumeric(10));
+				configuration.set("fingerprint",  Math.floor(1000000000 + Math.random() * 900000000));
 				ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration,
 						new File(getDataFolder(), "config.yml"));
 				
@@ -171,21 +173,21 @@ public class Main extends Plugin {
 			}
 		}, 1, 1, TimeUnit.SECONDS);
 	}
-//	public void addPlayerToArrayLists(Player p) {
+	public void addPlayerToArrayLists(PostLoginEvent e) {
+		ProxiedPlayer p = e.getPlayer();
+		playerArrayList.add(p);
+		playerNameArrayList.add(p.getName());
+		playerUUIDArrayList.add(p.getUniqueId().toString());
+
+	}
 //
-//		playerArrayList.add(p);
-//		playerNameArrayList.add(p.getName());
-//		playerUUIDArrayList.add(p.getUniqueId().toString());
-//
-//	}
-//
-//	public void removePlayerFromArrayLists(Player p) {
-//
-//		int playerIndex = playerArrayList.indexOf(p);
-//		playerArrayList.remove(playerIndex);
-//		playerNameArrayList.remove(playerIndex);
-//		playerUUIDArrayList.remove(playerIndex);
-//
-//	}
+	public void removePlayerFromArrayLists(PostLoginEvent e) {
+		ProxiedPlayer p = e.getPlayer();
+		int playerIndex = playerArrayList.indexOf(p);
+		playerArrayList.remove(playerIndex);
+		playerNameArrayList.remove(playerIndex);
+		playerUUIDArrayList.remove(playerIndex);
+
+	}
 
 }
