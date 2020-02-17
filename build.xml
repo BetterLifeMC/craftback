@@ -12,7 +12,7 @@
     <property name="dir.build" value="bin"/>
     <path id="CraftBack.classpath">
         <pathelement location="bin"/>
-        <pathelement location="libs/spigot.jar"/>
+        <pathelement location="libs/BungeeCord.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
