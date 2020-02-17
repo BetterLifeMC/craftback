@@ -18,10 +18,10 @@ public class MainSQL {
 	String dataPassword = "";
 	String serverName = "";
 	String serverHostName = "";
-	double version = 0.0;
+	String version = "";
 	int port = 8080;
 
-	public MainSQL(String da, String db, String f, String du, String dp, String sn, int p, String sh, double v) {
+	public MainSQL(String da, String db, String f, String du, String dp, String sn, int p, String sh, String v) {
 
 		this.dataAddress = da;
 		this.database = db;

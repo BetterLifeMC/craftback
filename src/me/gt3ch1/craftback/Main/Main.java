@@ -28,7 +28,7 @@ public class Main extends JavaPlugin {
 	 */
 	static String ss;
 	
-	static final double VERSION = 1.4;
+	static final String VERSION = "1.4-Spigot";
 	
 	public String getServerName() {
 		return serverName;
