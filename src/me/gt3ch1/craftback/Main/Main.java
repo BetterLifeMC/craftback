@@ -87,6 +87,7 @@ public class Main extends JavaPlugin {
 		return this;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void onEnable() {
 

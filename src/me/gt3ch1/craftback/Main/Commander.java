@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.md_5.bungee.api.ChatColor;
-
 public class Commander extends BukkitRunnable {
 	private final JavaPlugin plugin;
 
