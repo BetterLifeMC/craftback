@@ -100,17 +100,21 @@ public class Main extends Plugin {
 		Configuration configuration = null;
 
 		if (!file.exists()) {
+			
 			try (InputStream in = getResourceAsStream("config.yml")) {
 				Files.copy(in, file.toPath());
 				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
 						.load(new File(getDataFolder(), "config.yml"));
-				configuration.set("fingerprint", (int)Math.floor(100000 + Math.random() * 900000));
+				
+				configuration.set("fingerprint", (int) Math.floor(100000 + Math.random() * 900000));
+				
 				ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration,
 						new File(getDataFolder(), "config.yml"));
 
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
 		} else {
 			try {
 				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
@@ -135,6 +139,7 @@ public class Main extends Plugin {
 			serverHostName = configuration.getString("serverHostName");
 			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
 					getServerName(), getPort(), getServerHostName(), VERSION);
+			
 		}
 
 		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
@@ -154,11 +159,12 @@ public class Main extends Plugin {
 			}
 		});
 
-		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Starting webserver on port " + ChatColor.BLUE + port
-				+ ChatColor.DARK_GREEN + "...");
+		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Starting webserver on port "
+				+ ChatColor.BLUE + port + ChatColor.DARK_GREEN + "...");
+		
 		t.start();
+		
 		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
-//		TaskScheduler task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
 		startCommandListener();
 		getProxy().getPluginManager().registerListener(this, new PlayerEventListener());
 	}
@@ -171,19 +177,19 @@ public class Main extends Plugin {
 	}
 
 	public void startCommandListener() {
-				
+
 		getProxy().getScheduler().schedule(this, new Runnable() {
-			
+
 			@Override
 			public void run() {
 				if (Main.ss != null) {
-					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(), ss.toString());
+					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(),
+							ss.toString());
 
 					Main.ss = null;
 				}
 			}
 		}, 1, 1, TimeUnit.SECONDS);
 	}
-
 
 }
