@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import me.gt3ch1.craftback.http.CraftBackHttp;
+import me.gt3ch1.craftback.listeners.PlayerEventListener;
 import me.gt3ch1.craftback.sql.MainSQL;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
@@ -17,6 +18,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import net.md_5.bungee.event.EventHandler;
 
 public class Main extends Plugin {
 	/*
@@ -157,7 +159,8 @@ public class Main extends Plugin {
 		t.start();
 		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 //		TaskScheduler task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
-
+		startCommandListener();
+		getProxy().getPluginManager().registerListener(this, new PlayerEventListener());
 	}
 
 	@Override
@@ -167,7 +170,7 @@ public class Main extends Plugin {
 		getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 	}
 
-	public void clearLists() {
+	public void startCommandListener() {
 		getProxy().getScheduler().schedule(this, new Runnable() {
 			@Override
 			public void run() {
@@ -181,22 +184,5 @@ public class Main extends Plugin {
 		}, 1, 1, TimeUnit.SECONDS);
 	}
 
-	public void addPlayerToArrayLists(PostLoginEvent e) {
-		ProxiedPlayer p = e.getPlayer();
-		playerArrayList.add(p);
-		playerNameArrayList.add(p.getName());
-		playerUUIDArrayList.add(p.getUniqueId().toString());
-
-	}
-
-//
-	public void removePlayerFromArrayLists(PostLoginEvent e) {
-		ProxiedPlayer p = e.getPlayer();
-		int playerIndex = playerArrayList.indexOf(p);
-		playerArrayList.remove(playerIndex);
-		playerNameArrayList.remove(playerIndex);
-		playerUUIDArrayList.remove(playerIndex);
-
-	}
 
 }
