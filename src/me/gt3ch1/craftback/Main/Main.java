@@ -122,7 +122,7 @@ public class Main extends Plugin {
 
 		port = configuration.getInt("port");
 		useSQL = configuration.getBoolean("useSQL");
-		getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
+		BungeeCord.getInstance().getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
 
 		if (useSQL) {
 
@@ -137,7 +137,7 @@ public class Main extends Plugin {
 					getServerName(), getPort(), getServerHostName(), VERSION);
 		}
 
-		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
+		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
 
 		t = new Thread(new Runnable() {
 
@@ -154,10 +154,10 @@ public class Main extends Plugin {
 			}
 		});
 
-		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Starting webserver on port " + ChatColor.BLUE + port
+		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Starting webserver on port " + ChatColor.BLUE + port
 				+ ChatColor.DARK_GREEN + "...");
 		t.start();
-		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
+		BungeeCord.getInstance().getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 //		TaskScheduler task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
 		startCommandListener();
 		getProxy().getPluginManager().registerListener(this, new PlayerEventListener());
@@ -167,7 +167,7 @@ public class Main extends Plugin {
 	public void onDisable() {
 
 		t.interrupt();
-		getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
+		BungeeCord.getInstance().getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 	}
 
 	public void startCommandListener() {
