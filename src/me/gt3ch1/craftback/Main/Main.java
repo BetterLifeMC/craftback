@@ -171,15 +171,12 @@ public class Main extends Plugin {
 	}
 
 	public void startCommandListener() {
-		
-		System.out.println("STARTING LISTENER");
-		
+				
 		getProxy().getScheduler().schedule(this, new Runnable() {
 			
 			@Override
 			public void run() {
 				if (Main.ss != null) {
-					System.out.println("ss is not null!");
 					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(), ss.toString());
 
 					Main.ss = null;
