@@ -180,7 +180,7 @@ public class Main extends Plugin {
 			public void run() {
 				if (Main.ss != null) {
 					System.out.println("ss is not null!");
-					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(), "end");
+					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(), ss.toString());
 
 					Main.ss = null;
 				}
