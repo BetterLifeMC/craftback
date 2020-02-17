@@ -10,9 +10,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketImpl;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import me.gt3ch1.craftback.Main.Main;
 
 public class CraftBackHttp {

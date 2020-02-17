@@ -2,39 +2,31 @@ package me.gt3ch1.craftback.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Random;
-
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.RandomStringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.event.EventHandler;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.entity.Player;
-
 import me.gt3ch1.craftback.http.CraftBackHttp;
-import me.gt3ch1.craftback.listeners.PlayerEventListener;
 import me.gt3ch1.craftback.sql.MainSQL;
+import net.md_5.bungee.BungeeCord;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
-public class Main extends JavaPlugin {
+public class Main extends Plugin {
 	/*
-	 * TODO:
-	 * 		Add JavaDoc to all the functions.
-	 * 		Clean up uneccessary spaghetti code.
-	 * 		Add catch in CraftBackHttp for a message of "?"
-	 * 		Add versioning info about plugin for SQL.
-	 * 		Make branch for BungeeCord proxies.
+	 * TODO: Add JavaDoc to all the functions. Clean up uneccessary spaghetti code.
+	 * Add catch in CraftBackHttp for a message of "?" Add versioning info about
+	 * plugin for SQL. Make branch for BungeeCord proxies.
 	 * 
 	 */
 	static String ss;
-	
+
 	static final double VERSION = 1.4;
-	
+
 	public String getServerName() {
 		return serverName;
 	}
@@ -81,7 +73,6 @@ public class Main extends JavaPlugin {
 	public int port = 8080;
 	public boolean useSQL = false;
 
-	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
 
@@ -98,34 +89,44 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 
-		File f = new File("plugins/CraftBack/config.yml");
-		if (!f.exists()) {
-			this.saveDefaultConfig();
-			this.getConfig().set("fingerprint", RandomStringUtils.randomAlphanumeric(10));
-			this.getConfig().options().copyDefaults(true);
-			this.saveConfig();
+		if (!getDataFolder().exists())
+			getDataFolder().mkdir();
+
+		File file = new File(getDataFolder(), "config.yml");
+		Configuration configuration = null;
+
+		if (!file.exists()) {
+			try (InputStream in = getResourceAsStream("config.yml")) {
+				Files.copy(in, file.toPath());
+				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
+						.load(new File(getDataFolder(), "config.yml"));
+				configuration.set("fingerprint",  RandomStringUtils.randomAlphanumeric(10));
+				ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration,
+						new File(getDataFolder(), "config.yml"));
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
-		this.saveDefaultConfig();
-
-		port = this.getConfig().getInt("port");
-		useSQL = this.getConfig().getBoolean("useSQL");
-		Bukkit.getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
+		
+		port = configuration.getInt("port");
+		useSQL = configuration.getBoolean("useSQL");
+		getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
 
 		if (useSQL) {
 
-			serverName = this.getConfig().getString("name");
-			dataAddress = this.getConfig().getString("data.address");
-			database = this.getConfig().getString("data.database");
-			dataUsername = this.getConfig().getString("data.username");
-			dataPassword = this.getConfig().getString("data.password");
-			fingerprint = this.getConfig().getString("fingerprint");
-			serverHostName = this.getConfig().getString("serverHostName");
+			serverName = configuration.getString("name");
+			dataAddress = configuration.getString("data.address");
+			database = configuration.getString("data.database");
+			dataUsername = configuration.getString("data.username");
+			dataPassword = configuration.getString("data.password");
+			fingerprint = configuration.getString("fingerprint");
+			serverHostName = configuration.getString("serverHostName");
 			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
 					getServerName(), getPort(), getServerHostName(), VERSION);
 		}
 
-		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
+		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
 
 		t = new Thread(new Runnable() {
 
@@ -142,13 +143,11 @@ public class Main extends JavaPlugin {
 			}
 		});
 
-		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Starting webserver on port " + ChatColor.BLUE + port
+		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Starting webserver on port " + ChatColor.BLUE + port
 				+ ChatColor.DARK_GREEN + "...");
 		t.start();
-		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
-		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
-
-		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(getPluginHere()), this);
+		getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
+//		TaskScheduler task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
 
 	}
 
@@ -156,24 +155,37 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 
 		t.interrupt();
-		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
+		getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 	}
 
-	public void addPlayerToArrayLists(Player p) {
+	public void clearLists() {
+		getProxy().getScheduler().schedule(this, new Runnable() {
+			@Override
+			public void run() {
+				if (Main.ss != null) {
 
-		playerArrayList.add(p);
-		playerNameArrayList.add(p.getName());
-		playerUUIDArrayList.add(p.getUniqueId().toString());
-
+					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(),
+							Main.ss);
+					Main.ss = null;
+				}
+			}
+		}, 1, 1, TimeUnit.SECONDS);
 	}
-
-	public void removePlayerFromArrayLists(Player p) {
-
-		int playerIndex = playerArrayList.indexOf(p);
-		playerArrayList.remove(playerIndex);
-		playerNameArrayList.remove(playerIndex);
-		playerUUIDArrayList.remove(playerIndex);
-
-	}
+//	public void addPlayerToArrayLists(Player p) {
+//
+//		playerArrayList.add(p);
+//		playerNameArrayList.add(p.getName());
+//		playerUUIDArrayList.add(p.getUniqueId().toString());
+//
+//	}
+//
+//	public void removePlayerFromArrayLists(Player p) {
+//
+//		int playerIndex = playerArrayList.indexOf(p);
+//		playerArrayList.remove(playerIndex);
+//		playerNameArrayList.remove(playerIndex);
+//		playerUUIDArrayList.remove(playerIndex);
+//
+//	}
 
 }
