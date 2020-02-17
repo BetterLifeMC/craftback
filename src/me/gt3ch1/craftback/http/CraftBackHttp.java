@@ -15,10 +15,12 @@ import me.gt3ch1.craftback.Main.Main;
 public class CraftBackHttp {
 
 	public static void printHeaders(PrintWriter out) {
+		
 		out.println("HTTP/1.0 200 OK");
 		out.println("Content-Type: text/text");
 		out.println("Access-Control-Allow-Origin: *");
 		out.println("");
+		
 	}
 
 	@SuppressWarnings("resource")
@@ -35,6 +37,7 @@ public class CraftBackHttp {
 				String string = br.readLine();
 				String getString = "";
 				String url = "";
+				
 				try {
 
 					getString = string.split("/\\?")[1].split(" ")[0];
@@ -57,9 +60,11 @@ public class CraftBackHttp {
 					String[] parameters = getString.split("=");
 				
 					if (parameters[0].equals("message")) {
+						
 						printHeaders(out);
 						out.println("ok");
 						Main.setCommand(parameters[1].replace("+", " ").replace("%20", " ").replace("%3F", "?"));
+						
 					}
 
 				} else if (url.contentEquals("/getLog")) {
@@ -82,15 +87,18 @@ public class CraftBackHttp {
 
 					}
 				} else if (url.contentEquals("/getPlayerUUIDS")) {
+					
 					printHeaders(out);
 					out.println(Main.playerUUIDArrayList.toString());
 
 				} else if (url.contentEquals("/getPlayerNames")) {
+					
 					printHeaders(out);
 					out.println(Main.playerNameArrayList.toString());
 				}
 
 				else {
+					
 					printHeaders(out);
 
 				}
@@ -99,7 +107,6 @@ public class CraftBackHttp {
 				out.close();
 
 			} catch (Exception e) {
-//				e.printStackTrace();
 			}
 		}
 	}

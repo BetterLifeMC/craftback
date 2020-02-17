@@ -34,12 +34,12 @@ public class MainSQL {
 		doSQL();
 
 	}
-
+	//TODO:  Clean up this method.  it sucks.
 	public void doSQL() {
+		
 		BungeeCord.getInstance().getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Running SQL instances...");
 
 		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			// Connect up to an SQL server
 			Connection con = DriverManager.getConnection("jdbc:mysql://" + dataAddress + ":3306/" + database,
 					dataUsername, dataPassword);
@@ -47,16 +47,20 @@ public class MainSQL {
 
 			ResultSet rs = stmt.executeQuery("SELECT * FROM `Servers` WHERE `fingerprint` = '" + fingerprint + "'");
 			if (rs.next()) {
+				
 				BungeeCord.getInstance().getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
 				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
 						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = "+BungeeCord.getInstance().getConfig().getPlayerLimit()+", `version` = '" + version + "' WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
+				
 			}
 
 			else {
+				
 				BungeeCord.getInstance().getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Inserting SQL...");
 				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`hostname`,`maxplayers`,`version`) VALUES " + "('" + serverName
 						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"', "+BungeeCord.getInstance().getConfig().getPlayerLimit()+", '"+version+"')");
+				
 			}
 			con.close();
 		} catch (Exception e) {

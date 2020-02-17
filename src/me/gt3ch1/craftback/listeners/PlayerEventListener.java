@@ -11,6 +11,7 @@ public class PlayerEventListener  implements Listener {
 
 	@EventHandler
 	public void OnLogin(PostLoginEvent e) {
+		
 		ProxiedPlayer p = e.getPlayer();
 		Main.playerArrayList.add(p);
 		Main.playerNameArrayList.add(p.getName());
@@ -18,9 +19,9 @@ public class PlayerEventListener  implements Listener {
 
 	}
 
-//
 	@EventHandler
 	public void OnQuit(PlayerDisconnectEvent  e) {
+		
 		ProxiedPlayer p = e.getPlayer();
 		int playerIndex = Main.playerArrayList.indexOf(p);
 		Main.playerArrayList.remove(playerIndex);
