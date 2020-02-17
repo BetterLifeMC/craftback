@@ -96,7 +96,12 @@ public class Main extends Plugin {
 
 		File file = new File(getDataFolder(), "config.yml");
 		Configuration configuration = null;
-
+		try {
+			configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
+					.load(new File(getDataFolder(), "config.yml"));
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
 		if (!file.exists()) {
 			try (InputStream in = getResourceAsStream("config.yml")) {
 				Files.copy(in, file.toPath());
@@ -109,12 +114,7 @@ public class Main extends Plugin {
 				e.printStackTrace();
 			}
 		}
-		try {
-		configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
-				.load(new File(getDataFolder(), "config.yml"));
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		port = configuration.getInt("port");
 		useSQL = configuration.getBoolean("useSQL");
 		getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
