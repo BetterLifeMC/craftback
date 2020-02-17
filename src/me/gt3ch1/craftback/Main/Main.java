@@ -104,7 +104,7 @@ public class Main extends Plugin {
 				Files.copy(in, file.toPath());
 				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
 						.load(new File(getDataFolder(), "config.yml"));
-				configuration.set("fingerprint", Math.floor(100000 + Math.random() * 900000));
+				configuration.set("fingerprint", (int)Math.floor(100000 + Math.random() * 900000));
 				ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration,
 						new File(getDataFolder(), "config.yml"));
 
