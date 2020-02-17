@@ -29,7 +29,7 @@ public class Main extends Plugin {
 	 */
 	static String ss;
 
-	static final String VERSION = "1.5-Bukkit";
+	static final String VERSION = "1.5-Bungee";
 
 	public String getServerName() {
 		return serverName;
