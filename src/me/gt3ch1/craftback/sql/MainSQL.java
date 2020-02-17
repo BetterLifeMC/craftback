@@ -49,14 +49,14 @@ public class MainSQL {
 			if (rs.next()) {
 				BungeeCord.getInstance().getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
 				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
-						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = -1, `version` = '" + version + "' WHERE "
+						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = "+BungeeCord.getInstance().getConfig().getPlayerLimit()+", `version` = '" + version + "' WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
 			}
 
 			else {
 				BungeeCord.getInstance().getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Inserting SQL...");
 				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`hostname`,`maxplayers`,`version`) VALUES " + "('" + serverName
-						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"', -1, '"+version+"')");
+						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"', "+BungeeCord.getInstance().getConfig().getPlayerLimit()+", '"+version+"')");
 			}
 			con.close();
 		} catch (Exception e) {
