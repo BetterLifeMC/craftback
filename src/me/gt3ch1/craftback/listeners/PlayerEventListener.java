@@ -16,12 +16,14 @@ public class PlayerEventListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		
 		Player p = event.getPlayer();
 		craftback.addPlayerToArrayLists(p);
 
 	}
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event) {
+		
 		Player p = event.getPlayer();
 		craftback.removePlayerFromArrayLists(p);
 		

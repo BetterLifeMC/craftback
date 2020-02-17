@@ -35,29 +35,32 @@ public class MainSQL {
 		doSQL();
 
 	}
-
+	// This method sucks.
 	public void doSQL() {
 		Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Running SQL instances...");
 
 		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			// Connect up to an SQL server
 			Connection con = DriverManager.getConnection("jdbc:mysql://" + dataAddress + ":3306/" + database,
 					dataUsername, dataPassword);
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("SELECT * FROM `Servers` WHERE `fingerprint` = '" + fingerprint + "'");
+			
 			if (rs.next()) {
+				
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Updating SQL...");
 				stmt.executeUpdate("UPDATE `Servers` SET `name`= '" + serverName + "' ,`port` = " + port +
 						" ,`hostname` = '" + serverHostName + "' ,`maxplayers` = "+ Bukkit.getMaxPlayers() + ", `version` = '" + version + "' WHERE "
 						+ "`fingerprint` = '" + fingerprint + "'");
+				
 			}
 
 			else {
+				
 				Bukkit.getLogger().info(ChatColor.DARK_RED + "[[CraftBack]] Inserting SQL...");
 				stmt.executeUpdate("INSERT INTO `Servers` (`name`,`port`,`fingerprint`,`hostname`,`maxplayers`,`version`) VALUES " + "('" + serverName
 						+ "'," + port + ",'" + fingerprint + "', '" + serverHostName +"', "+Bukkit.getMaxPlayers() +", '"+version+"')");
+				
 			}
 			con.close();
 		} catch (Exception e) {

@@ -92,10 +92,12 @@ public class Main extends JavaPlugin {
 
 		File f = new File("plugins/CraftBack/config.yml");
 		if (!f.exists()) {
+			
 			this.saveDefaultConfig();
 			this.getConfig().set("fingerprint", RandomStringUtils.randomAlphanumeric(10));
 			this.getConfig().options().copyDefaults(true);
 			this.saveConfig();
+			
 		}
 
 		this.saveDefaultConfig();
@@ -115,6 +117,7 @@ public class Main extends JavaPlugin {
 			serverHostName = this.getConfig().getString("serverHostName");
 			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
 					getServerName(), getPort(), getServerHostName(), VERSION);
+			
 		}
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
@@ -149,6 +152,7 @@ public class Main extends JavaPlugin {
 
 		t.interrupt();
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
+		
 	}
 
 	public void addPlayerToArrayLists(Player p) {
