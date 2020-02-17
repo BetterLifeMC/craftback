@@ -19,11 +19,8 @@ public class Main extends JavaPlugin {
 	/*
 	 * TODO:
 	 * 		Add JavaDoc to all the functions.
+	 * TODO:
 	 * 		Clean up uneccessary spaghetti code.
-	 * 		Add catch in CraftBackHttp for a message of "?"
-	 * 		Add versioning info about plugin for SQL.
-	 * 		Make branch for BungeeCord proxies.
-	 * 		Fix fingerprint gen.
 	 * 
 	 */
 	static String ss;
