@@ -178,7 +178,7 @@ public class Main extends Plugin {
 			
 			@Override
 			public void run() {
-				System.out.println("IN LOOP");
+				System.out.println("IN LOOP --> Command: " + Main.ss);
 				if (Main.ss != null) {
 
 					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(),
