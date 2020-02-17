@@ -100,9 +100,8 @@ public class Main extends Plugin {
 		if (!file.exists()) {
 			try (InputStream in = getResourceAsStream("config.yml")) {
 				Files.copy(in, file.toPath());
-				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
-						.load(new File(getDataFolder(), "config.yml"));
-				configuration.set("fingerprint",  Math.floor(1000000000 + Math.random() * 900000000));
+				
+				configuration.set("fingerprint",  Math.floor(100000 + Math.random() * 900000));
 				ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration,
 						new File(getDataFolder(), "config.yml"));
 				
@@ -110,7 +109,12 @@ public class Main extends Plugin {
 				e.printStackTrace();
 			}
 		}
-		
+		try {
+		configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
+				.load(new File(getDataFolder(), "config.yml"));
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 		port = configuration.getInt("port");
 		useSQL = configuration.getBoolean("useSQL");
 		getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
