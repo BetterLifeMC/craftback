@@ -22,10 +22,10 @@ import net.md_5.bungee.event.EventHandler;
 
 public class Main extends Plugin {
 	/*
-	 * TODO: Add JavaDoc to all the functions. Clean up uneccessary spaghetti code.
-	 * Add catch in CraftBackHttp for a message of "?" Add versioning info about
-	 * plugin for SQL. Make branch for BungeeCord proxies.
-	 * 
+	 * TODO: 
+	 * 		Add JavaDoc to all the functions. 
+	 * TODO:
+	 * 		Clean up uneccessary spaghetti code.
 	 */
 	static String ss;
 
