@@ -96,25 +96,28 @@ public class Main extends Plugin {
 
 		File file = new File(getDataFolder(), "config.yml");
 		Configuration configuration = null;
-		try {
-			configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
-					.load(new File(getDataFolder(), "config.yml"));
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
+
 		if (!file.exists()) {
 			try (InputStream in = getResourceAsStream("config.yml")) {
 				Files.copy(in, file.toPath());
-				
-				configuration.set("fingerprint",  Math.floor(100000 + Math.random() * 900000));
+				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
+						.load(new File(getDataFolder(), "config.yml"));
+				configuration.set("fingerprint", Math.floor(100000 + Math.random() * 900000));
 				ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration,
 						new File(getDataFolder(), "config.yml"));
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			try {
+				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
+						.load(new File(getDataFolder(), "config.yml"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
+
 		port = configuration.getInt("port");
 		useSQL = configuration.getBoolean("useSQL");
 		getLogger().info(ChatColor.YELLOW + "[[CraftBack]] Using SQL: " + useSQL);
@@ -177,6 +180,7 @@ public class Main extends Plugin {
 			}
 		}, 1, 1, TimeUnit.SECONDS);
 	}
+
 	public void addPlayerToArrayLists(PostLoginEvent e) {
 		ProxiedPlayer p = e.getPlayer();
 		playerArrayList.add(p);
@@ -184,6 +188,7 @@ public class Main extends Plugin {
 		playerUUIDArrayList.add(p.getUniqueId().toString());
 
 	}
+
 //
 	public void removePlayerFromArrayLists(PostLoginEvent e) {
 		ProxiedPlayer p = e.getPlayer();
