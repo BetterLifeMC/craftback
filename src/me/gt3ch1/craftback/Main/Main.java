@@ -22,10 +22,10 @@ import net.md_5.bungee.event.EventHandler;
 
 public class Main extends Plugin {
 	/*
-	 * TODO: Add JavaDoc to all the functions. Clean up uneccessary spaghetti code.
-	 * Add catch in CraftBackHttp for a message of "?" Add versioning info about
-	 * plugin for SQL. Make branch for BungeeCord proxies.
-	 * 
+	 * TODO: 
+	 * 		Add JavaDoc to all the functions. 
+	 * TODO:
+	 * 		Clean up uneccessary spaghetti code.
 	 */
 	static String ss;
 
@@ -102,6 +102,7 @@ public class Main extends Plugin {
 		if (!file.exists()) {
 			
 			try (InputStream in = getResourceAsStream("config.yml")) {
+				
 				Files.copy(in, file.toPath());
 				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
 						.load(new File(getDataFolder(), "config.yml"));
@@ -117,8 +118,10 @@ public class Main extends Plugin {
 			
 		} else {
 			try {
+				
 				configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
 						.load(new File(getDataFolder(), "config.yml"));
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -137,6 +140,7 @@ public class Main extends Plugin {
 			dataPassword = configuration.getString("data.password");
 			fingerprint = configuration.getString("fingerprint");
 			serverHostName = configuration.getString("serverHostName");
+			
 			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
 					getServerName(), getPort(), getServerHostName(), VERSION);
 			
@@ -147,6 +151,7 @@ public class Main extends Plugin {
 		t = new Thread(new Runnable() {
 
 			public void run() {
+				
 				try {
 
 					CraftBackHttp.start(port);
@@ -182,11 +187,14 @@ public class Main extends Plugin {
 
 			@Override
 			public void run() {
+				
 				if (Main.ss != null) {
+					
 					BungeeCord.getInstance().getPluginManager().dispatchCommand(BungeeCord.getInstance().getConsole(),
 							ss.toString());
 
 					Main.ss = null;
+					
 				}
 			}
 		}, 1, 1, TimeUnit.SECONDS);
