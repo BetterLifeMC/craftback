@@ -83,11 +83,11 @@ public class CraftBackHttp {
 					}
 				} else if (url.contentEquals("/getPlayerUUIDS")) {
 					printHeaders(out);
-					out.println(Main.playerUUIDArrayList.toString());
+					out.print(Main.playerUUIDArrayList.toString());
 
 				} else if (url.contentEquals("/getPlayerNames")) {
 					printHeaders(out);
-					out.println(Main.playerNameArrayList.toString());
+					out.print(Main.playerNameArrayList.toString());
 				}
 
 				else {
