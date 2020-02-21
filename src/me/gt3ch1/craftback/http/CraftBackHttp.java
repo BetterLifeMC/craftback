@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.google.gson.GsonBuilder;
+
 import me.gt3ch1.craftback.Main.Main;
 
 public class CraftBackHttp {
@@ -86,12 +88,12 @@ public class CraftBackHttp {
 				} else if (url.contentEquals("/getPlayerUUIDS")) {
 					
 					printHeaders(out);
-					out.print(Main.playerUUIDArrayList.toString());
+					out.print(new GsonBuilder().create().toJson(Main.playerUUIDArrayList));
 
 				} else if (url.contentEquals("/getPlayerNames")) {
 					
 					printHeaders(out);
-					out.print(Main.playerNameArrayList.toString());
+					out.print(new GsonBuilder().create().toJson(Main.playerNameArrayList));
 					
 				}
 
