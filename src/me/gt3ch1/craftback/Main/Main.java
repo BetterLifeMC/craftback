@@ -76,7 +76,7 @@ public class Main extends JavaPlugin {
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
-
+	static boolean canDoHTTP = false;
 	Thread t;
 
 	public static void setCommand(String s) {
@@ -122,7 +122,7 @@ public class Main extends JavaPlugin {
 		}
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
-
+		canDoHTTP = true;
 		t = new Thread(new Runnable() {
 
 			public void run() {
@@ -150,7 +150,12 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
+		canDoHTTP = false;
+		try {
+			CraftBackHttp.ss.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		t.interrupt();
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 		
@@ -171,6 +176,10 @@ public class Main extends JavaPlugin {
 		playerNameArrayList.remove(playerIndex);
 		playerUUIDArrayList.remove(playerIndex);
 
+	}
+	
+	public static boolean isServingHTTP() {
+		return canDoHTTP;
 	}
 
 }
