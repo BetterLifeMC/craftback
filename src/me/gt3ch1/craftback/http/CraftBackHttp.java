@@ -21,13 +21,14 @@ public class CraftBackHttp {
 		out.println("");
 		
 	}
-
-	@SuppressWarnings("resource")
+	
+	public static ServerSocket ss;
+	
 	public static void start(int p) throws IOException {
 
-		ServerSocket ss = new ServerSocket(p);
+		ss = new ServerSocket(p);
 
-		while (true) {
+		while (Main.canDoHTTP) {
 			try {
 
 				Socket s = ss.accept();
@@ -85,6 +86,7 @@ public class CraftBackHttp {
 						out.write(read);
 
 					}
+					fr.close();
 				} else if (url.contentEquals("/getPlayerUUIDS")) {
 					
 					printHeaders(out);
