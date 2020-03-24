@@ -9,17 +9,19 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.google.gson.GsonBuilder;
+
 import me.gt3ch1.craftback.Main.Main;
 
 public class CraftBackHttp {
 
 	public static void printHeaders(PrintWriter out) {
-		
+
 		out.println("HTTP/1.0 200 OK");
 		out.println("Content-Type: text/text");
 		out.println("Access-Control-Allow-Origin: *");
 		out.println("");
-		
+
 	}
 	
 	public static ServerSocket ss;
@@ -37,7 +39,7 @@ public class CraftBackHttp {
 				String string = br.readLine();
 				String getString = "";
 				String url = "";
-				
+
 				try {
 
 					getString = string.split("/\\?")[1].split(" ")[0];
@@ -54,17 +56,15 @@ public class CraftBackHttp {
 				}
 
 				if (url.equals("/sendMessage")) {
-					
-					
-					
+
 					String[] parameters = getString.split("=");
-				
+
 					if (parameters[0].equals("message")) {
-						
+
 						printHeaders(out);
 						out.println("ok");
 						Main.setCommand(parameters[1].replace("+", " ").replace("%20", " ").replace("%3F", "?"));
-						
+
 					}
 
 				} else if (url.contentEquals("/getLog")) {
@@ -88,18 +88,17 @@ public class CraftBackHttp {
 					}
 					fr.close();
 				} else if (url.contentEquals("/getPlayerUUIDS")) {
-					
+
 					printHeaders(out);
-					out.println(Main.playerUUIDArrayList.toString());
+					out.print(new GsonBuilder().create().toJson(Main.playerUUIDArrayList));
 
 				} else if (url.contentEquals("/getPlayerNames")) {
-					
-					printHeaders(out);
-					out.println(Main.playerNameArrayList.toString());
-				}
 
-				else {
-					
+					printHeaders(out);
+					out.print(new GsonBuilder().create().toJson(Main.playerNameArrayList));
+
+				} else {
+
 					printHeaders(out);
 
 				}
