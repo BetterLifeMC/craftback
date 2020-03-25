@@ -10,6 +10,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 
 import me.gt3ch1.craftback.http.CraftBackHttp;
 import me.gt3ch1.craftback.listeners.PlayerEventListener;
@@ -17,16 +19,14 @@ import me.gt3ch1.craftback.sql.MainSQL;
 
 public class Main extends JavaPlugin {
 	/*
-	 * TODO:
-	 * 		Add JavaDoc to all the functions.
-	 * TODO:
-	 * 		Clean up uneccessary spaghetti code.
+	 * TODO: Add JavaDoc to all the functions. TODO: Clean up uneccessary spaghetti
+	 * code.
 	 * 
 	 */
 	static String ss;
-	
+
 	static final String VERSION = "1.4-Spigot";
-	
+
 	public String getServerName() {
 		return serverName;
 	}
@@ -72,7 +72,7 @@ public class Main extends JavaPlugin {
 	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
-
+	public Listener l;
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
@@ -93,12 +93,12 @@ public class Main extends JavaPlugin {
 
 		File f = new File("plugins/CraftBack/config.yml");
 		if (!f.exists()) {
-			
+
 			this.saveDefaultConfig();
 			this.getConfig().set("fingerprint", RandomStringUtils.randomAlphanumeric(10));
 			this.getConfig().options().copyDefaults(true);
 			this.saveConfig();
-			
+
 		}
 
 		this.saveDefaultConfig();
@@ -118,7 +118,7 @@ public class Main extends JavaPlugin {
 			serverHostName = this.getConfig().getString("serverHostName");
 			new MainSQL(getDataAddress(), getDatabase(), getFingerprint(), getDataUsername(), getDataPassword(),
 					getServerName(), getPort(), getServerHostName(), VERSION);
-			
+
 		}
 
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
@@ -143,8 +143,8 @@ public class Main extends JavaPlugin {
 		t.start();
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
-
-		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(getPluginHere()), this);
+		l = new PlayerEventListener(getPluginHere());
+		Bukkit.getPluginManager().registerEvents(l, this);
 
 	}
 
@@ -157,8 +157,9 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 		}
 		t.interrupt();
+		HandlerList.unregisterAll(l);
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
-		
+
 	}
 
 	public void addPlayerToArrayLists(Player p) {
@@ -177,7 +178,7 @@ public class Main extends JavaPlugin {
 		playerUUIDArrayList.remove(playerIndex);
 
 	}
-	
+
 	public static boolean isServingHTTP() {
 		return canDoHTTP;
 	}
