@@ -171,7 +171,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public void removePlayerFromArrayLists(Player p) {
-		
+
 		int playerIndex = playerArrayList.indexOf(p);
 		playerArrayList.remove(playerIndex);
 		playerNameArrayList.remove(playerIndex);
