@@ -162,6 +162,11 @@ public class Main extends JavaPlugin {
 		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 			removePlayerFromArrayLists(p);
 		}
+		try {
+			CraftBackHttp.ss.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 		
 	}
