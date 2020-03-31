@@ -26,12 +26,13 @@ public class Main extends JavaPlugin {
 	 */
 	static String ss;
 	private Listener l;
+	
 	static final String VERSION = "1.4-Spigot";
 	
 	public String getServerName() {
 		return serverName;
 	}
-
+	
 	public String getDataAddress() {
 		return dataAddress;
 	}
@@ -63,7 +64,9 @@ public class Main extends JavaPlugin {
 	public boolean isUseSQL() {
 		return useSQL;
 	}
-
+	public boolean isServingHTTP() {
+		return isServingHTTP;
+	}
 	public String serverName = "";
 	public String dataAddress = "";
 	public String database = "";
@@ -73,7 +76,7 @@ public class Main extends JavaPlugin {
 	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
-
+	public boolean isServingHTTP = true;
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
@@ -91,7 +94,7 @@ public class Main extends JavaPlugin {
 	@SuppressWarnings("unused")
 	@Override
 	public void onEnable() {
-
+		isServingHTTP = true;
 		File f = new File("plugins/CraftBack/config.yml");
 		if (!f.exists()) {
 			
@@ -153,6 +156,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		isServingHTTP = false;
 		l = null;
 		t.interrupt();
 		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
