@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
 import me.gt3ch1.craftback.http.CraftBackHttp;
 import me.gt3ch1.craftback.listeners.PlayerEventListener;
@@ -24,7 +25,7 @@ public class Main extends JavaPlugin {
 	 * 
 	 */
 	static String ss;
-	
+	private Listener l;
 	static final String VERSION = "1.4-Spigot";
 	
 	public String getServerName() {
@@ -120,7 +121,9 @@ public class Main extends JavaPlugin {
 					getServerName(), getPort(), getServerHostName(), VERSION);
 			
 		}
-
+		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+			addPlayerToArrayLists(p);
+		}
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Enabled");
 
 		t = new Thread(new Runnable() {
@@ -143,15 +146,18 @@ public class Main extends JavaPlugin {
 		t.start();
 		Bukkit.getLogger().info(ChatColor.GREEN + "[[CraftBack]] Started webserver.");
 		BukkitTask task = new Commander(getPluginHere()).runTaskTimer(getPluginHere(), 5, 20);
-
-		Bukkit.getPluginManager().registerEvents(new PlayerEventListener(getPluginHere()), this);
+		l = new PlayerEventListener(getPluginHere());
+		Bukkit.getPluginManager().registerEvents(l, this);
 
 	}
 
 	@Override
 	public void onDisable() {
-
+		l = null;
 		t.interrupt();
+		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+			removePlayerFromArrayLists(p);
+		}
 		Bukkit.getLogger().info(ChatColor.AQUA + "[[CraftBack]] Disabled");
 		
 	}
@@ -165,7 +171,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public void removePlayerFromArrayLists(Player p) {
-
+		
 		int playerIndex = playerArrayList.indexOf(p);
 		playerArrayList.remove(playerIndex);
 		playerNameArrayList.remove(playerIndex);
