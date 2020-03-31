@@ -64,7 +64,7 @@ public class Main extends JavaPlugin {
 	public boolean isUseSQL() {
 		return useSQL;
 	}
-	public boolean isServingHTTP() {
+	public static boolean isServingHTTP() {
 		return isServingHTTP;
 	}
 	public String serverName = "";
@@ -76,7 +76,7 @@ public class Main extends JavaPlugin {
 	public String serverHostName = "";
 	public int port = 8080;
 	public boolean useSQL = false;
-	public boolean isServingHTTP = true;
+	public static boolean isServingHTTP = true;
 	public ArrayList<Player> playerArrayList = new ArrayList<Player>();
 	static public ArrayList<String> playerNameArrayList = new ArrayList<String>();
 	static public ArrayList<String> playerUUIDArrayList = new ArrayList<String>();
